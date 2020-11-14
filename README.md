@@ -2,9 +2,10 @@
 ### This is a fork from elliotb/phpgraphlib
 
 PHPGraphLib was no longer maintained and not functional with PHP 7.x and up
-The 2.0-legacy-stable release is the last release by Elliotb
-v3.0 is PHP 7.x compatible
-V3.1 + will include some of my extras I put on the original PHPGraphLib release (before Github)
+## Planned releases
+*  2.0-legacy-stable release is the last release by Elliotb
+*  v3.0 is PHP 7.x compatible
+*  v3.1 will include some of my extras I put on the original PHPGraphLib release (before Github)
 
 The text below will be updated and demos will be restored if possible. I will also try to recreate the documentation.
 If anyone has the original documentation please sent it to me.
