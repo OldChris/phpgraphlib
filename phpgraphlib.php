@@ -134,7 +134,7 @@ class PHPGraphLib {
 
 	protected $image;
 	protected $output_file;
-	protected $error;
+	protected $error = array();
 	protected $data_array;
 	protected $actual_displayed_max_value;
 	protected $actual_displayed_min_value;
