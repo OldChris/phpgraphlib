@@ -8,7 +8,8 @@ PHPGraphLib was no longer maintained and not functional with PHP 7.x and up
 *  v3.1 will include some of my extras I put on the original PHPGraphLib release (before Github)
 
 The text below will be updated and demos will be restored if possible. I will also try to recreate the documentation.
-If anyone has the original documentation please sent it to me.
+On this link an web archive of the documentation is stored:
+[Documentation on Web Archive](https://web.archive.org/web/20180121185935/http://www.ebrueggeman.com/phpgraphlib/documentation)
 
 Thank you.
 Chris van Gorp (OldChris)
@@ -32,6 +33,8 @@ Documentation is available at [http://www.ebrueggeman.com/phpgraphlib](http://ww
 ### Examples
 
 Within the [Examples](/examples) directory are examples of PHPGraphLib usage. Git clone this repo to a directory on your localhost or server to see these examples in action.
+
+![PHPGraphLib Graph Example](/examples/example1.php)
 
 ![PHPGraphLib Graph Example](http://www.ebrueggeman.com/sites/www.ebrueggeman.com/files/images/phpgraphlib_example_graph.png)
 
