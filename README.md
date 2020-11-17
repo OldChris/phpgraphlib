@@ -1,11 +1,25 @@
 # PHPGraphLib Graphing Library
-### This is a fork from elliotb/phpgraphlib
-
+### Fork motivation
+This is a fork from elliotb/phpgraphlib
 PHPGraphLib was no longer maintained and not functional with PHP 7.x and up
-## Planned releases
+Plus I added some additions of my own some years ago.
+Looking for solution for some PHP 7.x issues I found the repo at Github
+Github user 'LupenWonse' did already fix many of the issues, and he added TrueType font support.
+
+## Releases
 *  2.0-legacy-stable release is the last release by Elliotb
-*  v3.0 is PHP 7.x compatible
-*  v3.1 will include some of my extras I put on the original PHPGraphLib release (before Github)
+*  v3.0 is PHP 7.x compatible (not true, only for line graphs ! )
+
+## Planned releases
+*  v3.1 will includes fixes and additions:
+Fixes:
+* LupenWonse : all remaining PHP 7 fixes found in his latest release are included
+* OldChris : function allocateGradientColors() checked on boundaries of rgb values
+
+Additions:
+* LupenWonse added TrueType fonts
+* OldChris added copyright text and creationdate, x-axis title, y-axis title.
+  also some changes in fontsize calculations (font width and height calculated from font size) 
 
 The text below will be updated and demos will be restored if possible. I will also try to recreate the documentation.
 On this link an web archive of the documentation is stored:
@@ -22,31 +36,27 @@ PHPGraphLib has powerful customization features, allowing you to generate the pe
 
 ### History
 
-The first version PHPGraphLib was written in 2007 by Elliott Brueggeman to deliver PHP generated graphs quickly and easily to PHP4 applications. It has grown in both features and maturity since its inception. PHPGraphLib now requires PHP5+. Originally available only for paid commercial use, PHPGraphLib was open-sourced in 2013 under the MIT License. Please visit [http://www.ebrueggeman.com/phpgraphlib](http://www.ebrueggeman.com/phpgraphlib) for more information.
+The first version PHPGraphLib was written in 2007 by Elliott Brueggeman to deliver PHP generated graphs quickly and easily to PHP4 applications. It has grown in both features and maturity since its inception. PHPGraphLib now requires PHP5+. Originally available only for paid commercial use, PHPGraphLib was open-sourced in 2013 under the MIT License. ~~Please visit [http://www.ebrueggeman.com/phpgraphlib](http://www.ebrueggeman.com/phpgraphlib) for more information.~~
 
 ### Documentation
 
-Documentation is available at [http://www.ebrueggeman.com/phpgraphlib](http://www.ebrueggeman.com/phpgraphlib)
-
-<a href="http://www.ebrueggeman.com/phpgraphlib">http://www.ebrueggeman.com/phpgraphlib</a>. I'll begin porting over documentation soon where it makes sense.
+For now please use this webarchive
+[Documentation on Web Archive](https://web.archive.org/web/20180121185935/http://www.ebrueggeman.com/phpgraphlib/documentation)
 
 ### Examples
 
 Within the [Examples](/examples) directory are examples of PHPGraphLib usage. Git clone this repo to a directory on your localhost or server to see these examples in action.
-<img src="examples/example1.php"
-     alt="Example 1"
-     style="float: left; margin-right: 10px;" />
 
-![PHPGraphLib Graph Example 1](example_images/example_1.png)
-![PHPGraphLib Graph Example 2](example_images/example_2.png)
-![PHPGraphLib Graph Example 3](example_images/example_3.png)
+![](example_images/example_1.png)
+![](example_images/example_2.png)
+![](example_images/example_3.png)
+![](example_images/example_4.png)
+![](example_images/example_5.png)
+![](example_images/example_6.png)
+![](example_images/example_7.png)
+![](example_images/example_8.png)
+![](example_images/example_9.png)
+![](example_images/example_10.png)
+![](example_images/example_11.png)
+![](example_images/example_12.png)
 
-![PHPGraphLib Graph Example](http://www.ebrueggeman.com/sites/www.ebrueggeman.com/files/images/phpgraphlib_example_graph.png)
-
-![Graph Example](http://www.ebrueggeman.com/sites/www.ebrueggeman.com/files/images/alaska_temp_graph.png)
-
-![Two Dataset Example](http://www.ebrueggeman.com/sites/www.ebrueggeman.com/files/images/company_production_graph.png)
-
-![Pie Chart Example](http://www.ebrueggeman.com/sites/www.ebrueggeman.com/files/images/example_graph_6_pie.png)
-
-![Stacked Graph Example](http://www.ebrueggeman.com/sites/www.ebrueggeman.com/files/images/stacked-graph-example-2.png)
