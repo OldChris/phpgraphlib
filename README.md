@@ -1,9 +1,12 @@
 # PHPGraphLib Graphing Library
 ### Fork motivation
 This is a fork from elliotb/phpgraphlib
+
 PHPGraphLib was no longer maintained and not functional with PHP 7.x and up
+
 Plus I added some additions of my own some years ago.
-Looking for solution for some PHP 7.x issues I found the repo at Github
+Looking for a solution for some PHP 7.x issues I found the repo at Github
+
 Github user 'LupenWonse' did already fix many of the issues, and he added TrueType font support.
 
 ## Releases
@@ -12,6 +15,7 @@ Github user 'LupenWonse' did already fix many of the issues, and he added TrueTy
 
 ## Planned releases
 *  v3.1 will includes fixes and additions:
+
 Fixes:
 * LupenWonse : all remaining PHP 7 fixes found in his latest release are included
 * OldChris : function allocateGradientColors() checked on boundaries of rgb values
