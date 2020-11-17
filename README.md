@@ -37,7 +37,9 @@ Within the [Examples](/examples) directory are examples of PHPGraphLib usage. Gi
      alt="Example 1"
      style="float: left; margin-right: 10px;" />
 
-![PHPGraphLib Graph Example](/examples/example1.php)
+![PHPGraphLib Graph Example 1](example_images/example_1.png)
+![PHPGraphLib Graph Example 2](example_images/example_2.png)
+![PHPGraphLib Graph Example 3](example_images/example_3.png)
 
 ![PHPGraphLib Graph Example](http://www.ebrueggeman.com/sites/www.ebrueggeman.com/files/images/phpgraphlib_example_graph.png)
 
