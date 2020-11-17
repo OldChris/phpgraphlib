@@ -39,7 +39,15 @@ THE SOFTWARE.
 
 class PHPGraphLib
 {
-
+	// added by CVG
+	// all fontsizes in one spot
+	const FONT_SIZE_TITLE = 5;  
+	const FONT_SIZE_SUB_TITLE = 4;
+	const FONT_SIZE_AXIS_TITLE = 3;
+	const FONT_SIZE_AXIS_LABEL = 2;
+	const FONT_SIZE_COPYRIGHT = 1;
+	const FONT_SIZE_LEGEND = 2;
+	// end added by CVG
     //set to actual font heights and widths used
     const TITLE_CHAR_WIDTH = 6;
     const TITLE_CHAR_HEIGHT = 12;
@@ -49,7 +57,6 @@ class PHPGraphLib
     const LEGEND_TEXT_HEIGHT = 12;
     const DATA_VALUE_TEXT_WIDTH = 6;
     const DATA_VALUE_TEXT_HEIGHT = 12;
-
     //Set default TTF font
     const DEFAULT_TTF_FONT = '../fonts/arial.ttf';
 
@@ -98,6 +105,12 @@ class PHPGraphLib
     protected $bool_title_center = true;
     protected $bool_background = false;
     protected $bool_title = false;
+		// added by CVG
+	protected $bool_titleXAxis = false;
+	protected $bool_titleYAxis = false;
+	protected $bool_copyright = false;
+	protected $bool_creationDate = false;
+	// end added by CVG
     protected $bool_ignore_data_fit_errors = false;
     protected $data_point_width = 6;
     protected $x_axis_value_interval = false;
@@ -243,6 +256,8 @@ class PHPGraphLib
             }
 
             //calculations
+   			$this->calcBottomMargin();
+			$this->calcLeftMargin();
             $this->calcTopMargin();
             $this->calcRightMargin();
             $this->calcCoords();
@@ -268,6 +283,18 @@ class PHPGraphLib
             if ($this->bool_title) {
                 $this->generateTitle();
             }
+			// added by CVG
+			if ($this->bool_titleXAxis) {
+			$this->generateTitleXAxis();
+			}
+			if ($this->bool_titleYAxis) {
+			$this->generateTitleYAxis();
+			}
+			if ($this->bool_copyright) {
+			$this->generateCopyright();
+			}
+			// end added by CVG
+
             if ($this->bool_x_axis) {
                 $this->generateXAxis();
             }
@@ -817,37 +844,135 @@ class PHPGraphLib
     {
         //spacing may have changed since earlier
         //use top margin or grid top y, whichever less
+		// added by CVG
+		$font_size=self::FONT_SIZE_TITLE;
+		$font_width=imagefontwidth($font_size);
+		$font_height=imagefontheight($font_size);
+		// end added by CVG
+		// below constants replaced by above calculated values
         $highestElement = ($this->top_margin < $this->y_axis_y2) ? $this->top_margin : $this->y_axis_y2;
-        $textVertPos = ($highestElement / 2) - (self::TITLE_CHAR_HEIGHT / 2); //centered
+        $textVertPos = ($highestElement / 2) - ($font_height / 2); //centered
         $titleLength = strlen($this->title_text);
         if ($this->bool_title_center) {
-            $title_x = ($this->width / 2) - (($titleLength * self::TITLE_CHAR_WIDTH) / 2);
+            $title_x = ($this->width / 2) - (($titleLength * $font_width) / 2);
             $title_y = $textVertPos;
         } elseif ($this->bool_title_left) {
             $title_x = $this->y_axis_x1;
             $title_y = $textVertPos;
         } elseif ($this->bool_title_right) {
-            $this->title_x = $this->x_axis_x2 - ($titleLength * self::TITLE_CHAR_WIDTH);
+            $this->title_x = $this->x_axis_x2 - ($titleLength * $font_width);
             $this->title_y = $textVertPos;
         }
-        $this->imagestring($this->image, 2, $title_x, $title_y, $this->title_text, $this->title_color);
+        $this->imagestring($this->image, $font_size, $title_x, $title_y, $this->title_text, $this->title_color);
     }
+	// added by CVG
+	protected function generateTitleXAxis()
+	{
+		$font_size=self::FONT_SIZE_AXIS_TITLE;
+		$font_width=imagefontwidth($font_size);
+		$font_height=imagefontheight($font_size);
+		$titleLength = strlen($this->titleXAxis_text);
+		$title_x = ($this->x_axis_x2 - ($titleLength * $font_width))/2;
+		$title_y = $this->height- 2 * $font_height;
+		$this->imagestring($this->image, $font_size, $title_x , $title_y , $this->titleXAxis_text, $this->title_color);
+	}
+	protected function generateTitleYAxis()
+	{
+		$font_size=self::FONT_SIZE_AXIS_TITLE;
+		$font_width=imagefontwidth($font_size);
+		$font_height=imagefontheight($font_size);
+		$titleLength = strlen($this->titleYAxis_text);
+		$title_x = $font_height; 
+		$title_y = ($this->height - $this->bottom_margin - $this->top_margin) /2 + ($titleLength * $font_width) / 2;
+		$this->imagestringup($this->image, $font_size, $title_x , $title_y , $this->titleYAxis_text, $this->title_color);
+	}
+	protected function generateCopyright()
+	{
+		$font_size=self::FONT_SIZE_COPYRIGHT;
+		$font_width=imagefontwidth($font_size);
+		$font_height=imagefontheight($font_size);
+		$copyrightLength = strlen($this->copyright);
+		$copyright_x =  $this->left_margin; 
+		$copyright_y = ($this->height - 2 * $font_height) ;
+		if ($this->bool_creationDate)
+		{
+			$datetime = new DateTime(); 
+			$datetime=$datetime->format('Y/m/d H:i:s'); 
+			$creationText= "   This plot created at " . $datetime;
+		} else
+		{
+			$creationText= "";
+		}
+		$this->imagestring($this->image, $font_size, $copyright_x , $copyright_y , $this->copyright . $creationText, $this->title_color);
+	}
+
+	protected function calcBottomMargin()
+	{
+		$font_size=self::FONT_SIZE_AXIS_LABEL;
+		$font_width_axis_label=imagefontwidth($font_size);
+		$font_height_axis_label=imagefontheight($font_size);
+		$font_size=self::FONT_SIZE_AXIS_TITLE;
+		$font_width_axis_title=imagefontwidth($font_size);
+		$font_height_axis_title=imagefontheight($font_size);
+		$font_size=self::FONT_SIZE_COPYRIGHT;
+		$font_width_copyright=imagefontwidth($font_size);
+		$font_height_copyright=imagefontheight($font_size);
+		
+		$delta = 3 * $font_width_axis_label + 2 * $font_height_axis_title;
+
+		if ($this->bool_titleXAxis) {
+			//include space for title, approx margin + 3*title height
+			$delta += 2 * $font_height_axis_title;
+		}
+		if ($this->bool_copyright) {
+			//just use default spacing
+			$delta += 2 * $font_height_copyright;
+		}
+		$this->bottom_margin = $delta;
+	}
+	protected function calcLeftMargin()
+	{
+		$font_size=self::FONT_SIZE_AXIS_LABEL;
+		$font_width_axis_label=imagefontwidth($font_size);
+		$font_height_axis_label=imagefontheight($font_size);
+		$font_size=self::FONT_SIZE_AXIS_TITLE;
+		$font_width_axis_title=imagefontwidth($font_size);
+		$font_height_axis_title=imagefontheight($font_size);
+
+		$delta = 6 * $font_width_axis_label + 2 * $font_height_axis_title;
+		if ($this->bool_titleYAxis) {
+			//include space for title, approx margin + 3*title height
+			$delta += 2 * $font_height_axis_title;
+		}
+		$this->left_margin = $delta;
+	}
+	// end added by CVG
 
     protected function calcTopMargin()
     {
-        if ($this->bool_title) {
-            //include space for title, approx margin + 3*title height
-            $this->top_margin = ($this->height * (self::X_AXIS_MARGIN_PERCENT / 100)) + self::TITLE_CHAR_HEIGHT;
-        } else {
-            //just use default spacing
-            $this->top_margin = $this->height * (self::X_AXIS_MARGIN_PERCENT / 100);
-        }
-    }
+    	$font_size=self::FONT_SIZE_TITLE;
+		$font_width_title=imagefontwidth($font_size);
+		$font_height_title=imagefontheight($font_size);
+
+		$delta = 3 * $font_height_title;
+		if ($this->bool_title) {
+			//include space for title, approx margin + 3*title height
+			$delta += 2* $font_height_title;
+		}
+		$this->top_margin = $delta;
+	}
 
     protected function calcRightMargin()
     {
-        //just use default spacing
-        $this->right_margin = $this->width * (self::Y_AXIS_MARGIN_PERCENT / 100);
+		$font_size=self::FONT_SIZE_AXIS_LABEL;
+		$font_width_axis_label=imagefontwidth($font_size);
+		$font_height_axis_label=imagefontheight($font_size);
+		$font_size=self::FONT_SIZE_AXIS_TITLE;
+		$font_width_axis_title=imagefontwidth($font_size);
+		$font_height_axis_title=imagefontheight($font_size);
+
+		$delta = 2* $font_height_axis_label;
+		$this->right_margin = 	$delta;
     }
 
     protected function calcCoords()
@@ -1109,6 +1234,46 @@ class PHPGraphLib
                 $this->error[] = "String arg for setTitleLocation() not specified properly.";
         }
     }
+	// added by CVG
+	public function setTitleXAxis($title)
+	{
+		if (!empty($title)) {
+			$this->titleXAxis_text = $title;
+			$this->bool_titleXAxis = true;
+		} else {
+			$this->error[] = "String arg for setTitleXAxis() not specified properly.";
+		}
+	}
+	public function setTitleYAxis($title)
+	{
+		if (!empty($title)) {
+			$this->titleYAxis_text = $title;
+			$this->bool_titleYAxis = true;
+		} else {
+			$this->error[] = "String arg for setTitleYAxis() not specified properly.";
+		}
+	}
+
+	public function setCopyright($copyrightText)
+	{
+		if (!empty($copyrightText)) {
+			$this->copyright = $copyrightText;
+			$this->bool_copyright = true;
+		} else {
+			$this->error[] = "String arg for setCopyright() not specified properly.";
+		}
+	}
+
+	public function setCreationDate($bool)
+	{
+		if (is_bool($bool)) {
+			$this->bool_creationDate = $bool;
+		} else {
+			$this->error[] = "Boolean arg for setCreationDate() not specified properly.";
+		}
+	}
+
+	// end added by CVG
 
     public function setBars($bool)
     {
