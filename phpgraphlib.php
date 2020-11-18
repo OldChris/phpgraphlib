@@ -218,12 +218,12 @@ class PHPGraphLib
 
     protected $ttf_font;
 
-    public function __construct($width, $height, $output_file = null, $ttf_font = self::DEFAULT_TTF_FONT)
+    public function __construct($width, $height, $output_file = null)
     {
         $this->width = $width;
         $this->height = $height;
         $this->output_file = $output_file;
-        $this->ttf_font = $ttf_font;
+        $this->ttf_font = self::DEFAULT_TTF_FONT;
         $this->initialize();
         $this->allocateColors();
     }
@@ -238,8 +238,7 @@ class PHPGraphLib
         $this->image = @imagecreate($this->width, $this->height)
             or die("Cannot Initialize new GD image stream - Check your PHP setup");
 
-        //Check for FreeType Support
-       // $this->bool_use_ttf = gd_info()["FreeType Support"];
+
     }
 
     public function createGraph()
@@ -1824,14 +1823,39 @@ class PHPGraphLib
 
     public function setTtfFont($font)
     {
-        $this->ttf_font = $font;
+    	//Check for FreeType Support
+        $ttfSupport = gd_info()["FreeType Support"];
+        $ttfFileExist=file_exists($font);
+        if ( $ttfSupport  AND $ttfFileExist )
+        {
+	        $this->bool_use_ttf = true;
+	        $this->ttf_font = $font;
+        }
+        else
+        {
+	        $this->bool_use_ttf = false;
+	        if (!$ttfFileExist) 
+	        {
+                $this->error[] = "TTF Font file not found.";
+	            $this->error[] = "given  $font";
+            }
+            if ($ttfSupport)
+            {
+            	$this->error[] = "TTF Support = True";
+        	}
+	        else
+	        {
+            	$this->error[] = "TTF Support = False";
+	        }
+        }
+
     }
 
     protected function imagestring($image, $font_size, $xValue, $yValue, $text, $color, $vertical = false)
     {
-        $correction = 10;
-        $size = $font_size + 5.5;
         if ($this->bool_use_ttf) {
+	        $correction = 10;
+	        $size = $font_size + 5.5;
             $angle = $vertical ? 90 : 0;
             $xValue += $vertical ? $correction : 0;
             $yValue += $vertical ? 0 : $correction;
